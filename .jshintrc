@@ -1,0 +1,26 @@
+{
+  "node": true,
+  "browser": true,
+  "asi": false,
+  "laxcomma": true,
+  "debug": false,
+  "devel": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "immed": true,
+  "newcap": true,
+  "plusplus": false,
+  "undef": true,
+  "strict": false,
+  "predef": [
+    "define",
+    "describe",
+    "it",
+    "before",
+    "beforeEach",
+    "after",
+    "afterEach",
+    "expect",
+    "flog"
+  ]
+}

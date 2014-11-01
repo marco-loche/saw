@@ -1,0 +1,33 @@
+{
+  "name": "scorm-api-wrapper",
+  "version": "0.0.0",
+  "description": "An SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
+  "main": "saw.js",
+  "devDependencies": {
+    "flog": "0.0.1",
+    "jest-cli": "^0.1.18"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marco-loche/saw"
+  },
+  "keywords": [
+    "scorm",
+    "api",
+    "Wrapper",
+    "e-learning"
+  ],
+  "author": "Marco Loche <marco@marcoloche.com> (www.marcoloche.com)",
+  "readmeFilename": "README.md",
+  "license": {
+    "type": "MIT",
+    "url": "http://marco-loche.mit-license.org/"
+  },
+  "bugs": {
+    "url": "https://github.com/marco-loche/scorm-api-wrapper/issues"
+  },
+  "homepage": "https://github.com/marco-loche/scorm-api-wrapper"
+}

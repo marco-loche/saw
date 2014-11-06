@@ -28,8 +28,7 @@
     initialized: false,
     API:         null,
 
-    initialize: function () {
-      this.initialized = true;
+    configure: function () {
       this.API = findAPI(window);
       if ((this.API == null) && (window.opener != null) && (typeof(window.opener) != "undefined")) {
         this.API = findAPI(window.opener);
@@ -39,9 +38,12 @@
         throw new Error("A valid SCORM API Adapter can not be found in the window or in the window.opener");
       }
       this.initialized = true;
+    },
 
-    }
-    ,
+    initialize: function () {
+      this.configure();
+
+    },
 
     isInitialized: function () {
       return (this.initialized && this.API != null);

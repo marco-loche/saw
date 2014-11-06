@@ -13,7 +13,7 @@ describe('saw', function () {
   });
 
   afterEach(function () {
-    delete saw;
+    saw = null;
     delete window.API;
   });
 

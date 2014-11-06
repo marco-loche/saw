@@ -9,7 +9,7 @@ describe('saw', function () {
   });
 
   afterEach(function () {
-    delete saw;
+    saw = null;
   });
 
   describe('configure() with a not available API Adapter', function () {

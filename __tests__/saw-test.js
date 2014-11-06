@@ -8,7 +8,7 @@ describe('saw', function () {
   });
 
   afterEach(function () {
-    delete saw;
+    saw = null;
   });
 
   it('should be an object', function () {

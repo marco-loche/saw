@@ -19,11 +19,11 @@ describe('saw', function () {
     });
   });
 
-  describe('initialize() with an available API Adapter', function () {
+  describe('configure() with an available API Adapter', function () {
 
     it('should be initialized after init invocation if the adapted is defined in the current window', function () {
       window.API = {};
-      this.saw.initialize();
+      this.saw.configure();
       expect(this.saw.isInitialized()).toBe(true);
     });
 
@@ -38,7 +38,7 @@ describe('saw', function () {
       window.opener = {};
       window.opener.API = {};
 
-      this.saw.initialize();
+      this.saw.configure();
       expect(this.saw.isInitialized()).toBe(true);
       window.opener = opener;
     });

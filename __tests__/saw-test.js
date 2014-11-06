@@ -2,29 +2,38 @@
 jest.dontMock('../saw.js');
 
 describe('saw', function () {
-
+  var saw;
   beforeEach(function () {
-    this.saw = require('../saw.js');
+    saw = require('../saw.js');
   });
 
   afterEach(function () {
-    delete this.saw;
+    delete saw;
   });
 
   it('should be an object', function () {
-    expect(this.saw).toBeDefined();
+    expect(saw).toBeDefined();
   });
 
-  it('should have an initialize function', function () {
-    expect(this.saw.initialize).toBeDefined();
-  });
 
   it('should have an isInitialized function', function () {
-    expect(this.saw.isInitialized).toBeDefined();
+    expect(saw.isConfigured).toBeDefined();
   });
 
   it('should not be initialize before init invocation', function () {
-    expect(this.saw.isInitialized()).toBe(false);
+    expect(saw.isConfigured()).toBe(false);
+  });
+
+  it('should have an initialize function', function () {
+    expect(saw.initializeLMS).toBeDefined();
+  });
+
+  it('should not be initialize before init invocation', function () {
+    expect(saw.isLMSInitialized()).toBe(false);
+  });
+
+  it('should have an initialize function', function () {
+    expect(saw.initialize).toBeDefined();
   });
 
 });

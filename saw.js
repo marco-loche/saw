@@ -25,7 +25,7 @@
   };
 
   var saw = {
-    initialized: false,
+    LMSInitialized: false,
     API:         null,
 
     configure: function () {
@@ -37,16 +37,28 @@
       if (this.API == null) {
         throw new Error("A valid SCORM API Adapter can not be found in the window or in the window.opener");
       }
-      this.initialized = true;
     },
 
+    isConfigured: function () {
+      return !(this.API == null);
+    },
+
+    initializeLMS: function () {
+      this.LMSInitialized  = this.API.LMSInitialize("");
+      //log LMSInitialization
+      if(!this.isLMSInitialized()){
+        throw new Error("LMS Initialization failed");
+      }
+    },
+
+    isLMSInitialized: function () {
+      return this.LMSInitialized;
+    },
+
+    // A convenience method that do the correct sequence of calls
     initialize: function () {
       this.configure();
-
-    },
-
-    isInitialized: function () {
-      return (this.initialized && this.API != null);
+      this.initializeLMS();
     }
 
   }

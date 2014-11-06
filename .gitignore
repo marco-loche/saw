@@ -1,4 +1,4 @@
 .idea/
 node_modules/
-_docs/
+_docs
 npm-debug.log

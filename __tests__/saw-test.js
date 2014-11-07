@@ -49,7 +49,7 @@ describe('saw', function () {
   });
 
   it('should have an initialize function', function () {
-    expect(saw.logOpertion).toBeDefined();
+    expect(saw.logOperation).toBeDefined();
   });
   /**
    * saw.configure()
@@ -98,7 +98,7 @@ describe('saw', function () {
 
     beforeEach(function () {
       saw = require('../saw.js');
-      saw.logOpertion = logOperation;
+      saw.logOperation = logOperation;
       window.API = {
         LMSInitialize: LMSInit
       };
@@ -182,7 +182,7 @@ describe('saw', function () {
       LMSGetLastErrStr.mockReturnValue("NoErrorStr");
       LMSGetDia.mockReturnValue("Diagnostic");
       saw.initialize();
-      saw.logOpertion("foo", "bar")
+      saw.logOperation("foo", "bar")
       expect(saw.sessionLogs.length).toEqual(2);
 
       expect(saw.sessionLogs[1].timestamp).toBeDefined();

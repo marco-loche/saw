@@ -23,6 +23,7 @@
 
     return win.API;
   };
+
   var scormStatusCodeString = {
     '0':   'NoError',
     '101': 'GeneralException',
@@ -61,7 +62,7 @@
     initializeLMS: function () {
       //see 3.2.2.1 LMSInitialize
       this.LMSInitialized = "true" === String(this.API.LMSInitialize(""));
-      this.logOpertion('LMSInitialize');
+      this.logOperation('LMSInitialize');
       if (!this.isLMSInitialized()) {
         throw new Error("LMS Initialization failed");
       }
@@ -77,7 +78,7 @@
       this.initializeLMS();
     },
 
-    logOpertion: function (scormAPIFn, scormAPIFnArguments) {
+    logOperation: function (scormAPIFn, scormAPIFnArguments) {
       var scormLastErrCode = this.API.LMSGetLastError();
       var log = {
         'timestamp':          Date.now(),

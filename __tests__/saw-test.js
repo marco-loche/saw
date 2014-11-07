@@ -104,6 +104,15 @@ describe('saw', function () {
       expect(LMSInit).toBeCalledWith('');
     });
 
+    it('should be ok if the LMS can be initialized but do not return a standard String "true"', function () {
+      LMSInit.mockReturnValueOnce(true);
+
+      saw.initialize();
+      expect(saw.isLMSInitialized()).toBe(true);
+      expect(LMSInit).toBeCalled();
+      expect(LMSInit).toBeCalledWith('');
+    });
+
     it('initializeLMS throw an error if LMS can not be initialized', function () {
       //SCORM standard expect a String "false" to be returned
       LMSInit.mockReturnValueOnce("false");

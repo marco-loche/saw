@@ -123,6 +123,26 @@ describe('saw', function () {
       expect(saw.isLMSInitialized()).toBe(false);
     });
 
+  });/**
+   *saw.logOperation()
+   */
+  describe('logOperation', function () {
+    var LMSInit = jest.genMockFunction();
+
+    beforeEach(function () {
+      saw = require('../saw.js');
+      window.API = {
+        LMSInitialize: LMSInit
+      };
+
+    });
+
+    afterEach(function () {
+      saw = null;
+      delete window.API;
+    });
+
+
   });
 
 });

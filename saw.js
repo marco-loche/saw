@@ -23,10 +23,25 @@
 
     return win.API;
   };
+  var scormStatusCodeString = {
+    '0':   'NoError',
+    '101': 'GeneralException',
+    '102': 'ServerBusy',
+    '201': 'InvalidArgumentError',
+    '202': 'ElementCannotHaveChildren',
+    '203': 'ElementIsNotAnArray',
+    '301': 'NotInitialized',
+    '401': 'NotImplementedError',
+    '402': 'InvalidSetValue',
+    '403': 'ElementIsReadOnly',
+    '404': 'ElementIsWriteOnly',
+    '405': 'IncorrectDataType'
+  };
 
   var saw = {
     LMSInitialized: false,
-    API:         null,
+    API:            null,
+    sessionLogs:    [],
 
     configure: function () {
       this.API = findAPI(window);
@@ -56,13 +71,27 @@
       return this.LMSInitialized;
     },
 
-    // A convenience method that do the correct sequence of calls
-    initialize: function () {
+    // A convenience method that do the correct sequence of calls for the object initialization
+    initialize:       function () {
       this.configure();
       this.initializeLMS();
+    },
+
+    logOpertion: function (scormAPIFn, scormAPIFnArguments) {
+      var scormLastErrCode = this.API.LMSGetLastError();
+      var log = {
+        'timestamp':       Date.now(),
+        'scormFn':         scormAPIFn,
+        'scormFnArgs':     scormAPIFnArguments,
+        'errorCode':       this.API.LMSGetLastErrorString(scormLastErrCode),
+        'errorCodeString': scormStatusCodeString[scormLastErrCode],
+        'diagnostic':      this.API.LMSGetDiagnostic(scormLastErrCode)
+      };
+
+      this.sessionLogs.push(log);
     }
 
-  }
+  };
 
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = saw;

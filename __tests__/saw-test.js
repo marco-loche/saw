@@ -25,6 +25,7 @@ describe('saw', function () {
 
   it('should have an attribute to store session logs (interactio with the API hanlde)', function () {
     expect(saw.sessionLogs).toBeDefined();
+    expect(saw.sessionLogs.length).toEqual(0);
   });
 
   it('should have an isInitialized function', function () {
@@ -170,7 +171,8 @@ describe('saw', function () {
       LMSInit.mockReturnValueOnce("true");
 
       saw.initialize();
-      expect(saw.sessionLogs.length).toEqual(0);
+      expect(saw.sessionLogs.length).toEqual(1);
+      expect(saw.sessionLogs[0].scormFn).toEqual('LMSInitialize');
     });
 
     it('when called should add a log entry to the sessionLogs attribute', function () {
@@ -181,16 +183,16 @@ describe('saw', function () {
       LMSGetDia.mockReturnValue("Diagnostic");
       saw.initialize();
       saw.logOpertion("foo", "bar")
-      expect(saw.sessionLogs.length).toEqual(1);
+      expect(saw.sessionLogs.length).toEqual(2);
 
-      expect(saw.sessionLogs[0].timestamp).toBeDefined();
-      expect(saw.sessionLogs[0].scormFn).toEqual('foo');
-      expect(saw.sessionLogs[0].scormFnArgs).toEqual('bar');
-      expect(saw.sessionLogs[0].errorCode).toEqual("0");
-      expect(saw.sessionLogs[0].errorCodeString).toEqual("NoError");
+      expect(saw.sessionLogs[1].timestamp).toBeDefined();
+      expect(saw.sessionLogs[1].scormFn).toEqual('foo');
+      expect(saw.sessionLogs[1].scormFnArgs).toEqual('bar');
+      expect(saw.sessionLogs[1].errorCode).toEqual("0");
+      expect(saw.sessionLogs[1].errorCodeString).toEqual("NoError");
       expect(LMSGetLastErrStr).toBeCalledWith("0");
-      expect(saw.sessionLogs[0].errorCodeStringLMS).toEqual("NoErrorStr");
-      expect(saw.sessionLogs[0].diagnostic).toEqual("Diagnostic");
+      expect(saw.sessionLogs[1].errorCodeStringLMS).toEqual("NoErrorStr");
+      expect(saw.sessionLogs[1].diagnostic).toEqual("Diagnostic");
     });
   });
 

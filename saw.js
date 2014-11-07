@@ -61,7 +61,7 @@
     initializeLMS: function () {
       //see 3.2.2.1 LMSInitialize
       this.LMSInitialized = "true" === String(this.API.LMSInitialize(""));
-     // this.logOpertion('LMSInitialize');
+      // this.logOpertion('LMSInitialize');
       if (!this.isLMSInitialized()) {
         throw new Error("LMS Initialization failed");
       }
@@ -80,12 +80,13 @@
     logOpertion: function (scormAPIFn, scormAPIFnArguments) {
       var scormLastErrCode = this.API.LMSGetLastError();
       var log = {
-        'timestamp':       Date.now(),
-        'scormFn':         scormAPIFn,
-        'scormFnArgs':     scormAPIFnArguments,
-        'errorCode':       this.API.LMSGetLastErrorString(scormLastErrCode),
-        'errorCodeString': scormStatusCodeString[scormLastErrCode],
-        'diagnostic':      this.API.LMSGetDiagnostic("")
+        'timestamp':          Date.now(),
+        'scormFn':            scormAPIFn,
+        'scormFnArgs':        scormAPIFnArguments,
+        'errorCode':          scormLastErrCode,
+        'errorCodeString':    scormStatusCodeString[scormLastErrCode],
+        'errorCodeStringLMS': this.API.LMSGetLastErrorString(scormLastErrCode),
+        'diagnostic':         this.API.LMSGetDiagnostic("")
       };
 
       this.sessionLogs.push(log);

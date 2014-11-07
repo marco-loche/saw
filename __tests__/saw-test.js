@@ -176,9 +176,21 @@ describe('saw', function () {
     it('when called should add a log entry to the sessionLogs attribute', function () {
       //SCORM standard expect a String "true" to be returned
       LMSInit.mockReturnValueOnce("true");
-
+      LMSGetLastErr.mockReturnValue("0");
+      LMSGetLastErrStr.mockReturnValue("NoErrorStr");
+      LMSGetDia.mockReturnValue("Diagnostic");
       saw.initialize();
-      expect(saw.sessionLogs.length).toEqual(0);
+      saw.logOpertion("foo", "bar")
+      expect(saw.sessionLogs.length).toEqual(1);
+
+      expect(saw.sessionLogs[0].timestamp).toBeDefined();
+      expect(saw.sessionLogs[0].scormFn).toEqual('foo');
+      expect(saw.sessionLogs[0].scormFnArgs).toEqual('bar');
+      expect(saw.sessionLogs[0].errorCode).toEqual("0");
+      expect(saw.sessionLogs[0].errorCodeString).toEqual("NoError");
+      expect(LMSGetLastErrStr).toBeCalledWith("0");
+      expect(saw.sessionLogs[0].errorCodeStringLMS).toEqual("NoErrorStr");
+      expect(saw.sessionLogs[0].diagnostic).toEqual("Diagnostic");
     });
   });
 

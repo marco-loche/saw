@@ -44,9 +44,10 @@
     },
 
     initializeLMS: function () {
-      this.LMSInitialized  = this.API.LMSInitialize("");
-      //log LMSInitialization
-      if(!this.isLMSInitialized()){
+      //see 3.2.2.1 LMSInitialize
+      this.LMSInitialized = "true" == this.API.LMSInitialize("");
+     // this.logOpertion('LMSInitialize');
+      if (!this.isLMSInitialized()) {
         throw new Error("LMS Initialization failed");
       }
     },

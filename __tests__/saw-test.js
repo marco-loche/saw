@@ -78,12 +78,15 @@ describe('saw', function () {
    */
   describe('initializeLMS', function () {
     var LMSInit = jest.genMockFunction();
+    var logOperation = jest.genMockFunction();
 
     beforeEach(function () {
       saw = require('../saw.js');
+      saw.logOpertion = logOperation;
       window.API = {
         LMSInitialize: LMSInit
       };
+
     });
 
     afterEach(function () {
@@ -92,7 +95,8 @@ describe('saw', function () {
     });
 
     it('should be ok if the LMS can be initialized', function () {
-      LMSInit.mockReturnValueOnce(true);
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
 
       saw.initialize();
       expect(saw.isLMSInitialized()).toBe(true);
@@ -101,7 +105,8 @@ describe('saw', function () {
     });
 
     it('initializeLMS throw an error if LMS can not be initialized', function () {
-      LMSInit.mockReturnValueOnce(false);
+      //SCORM standard expect a String "false" to be returned
+      LMSInit.mockReturnValueOnce("false");
 
       expect(function () {
         saw.initialize();

@@ -15,6 +15,18 @@ describe('saw', function () {
     expect(saw).toBeDefined();
   });
 
+  it('should have an attribute to store the API handle', function () {
+    expect(saw.API).toBeDefined();
+  });
+
+  it('should have an attribute to store the LMS initialization status', function () {
+    expect(saw.LMSInitialized).toBeDefined();
+  });
+
+  it('should have an attribute to store session logs (interactio with the API hanlde)', function () {
+    expect(saw.sessionLogs).toBeDefined();
+  });
+
   it('should have an isInitialized function', function () {
     expect(saw.isConfigured).toBeDefined();
   });
@@ -35,6 +47,9 @@ describe('saw', function () {
     expect(saw.initialize).toBeDefined();
   });
 
+  it('should have an initialize function', function () {
+    expect(saw.logOpertion).toBeDefined();
+  });
   /**
    * saw.configure()
    */
@@ -123,16 +138,24 @@ describe('saw', function () {
       expect(saw.isLMSInitialized()).toBe(false);
     });
 
-  });/**
+  });
+
+  /**
    *saw.logOperation()
    */
   describe('logOperation', function () {
     var LMSInit = jest.genMockFunction();
+    var LMSGetLastErr = jest.genMockFunction();
+    var LMSGetLastErrStr = jest.genMockFunction();
+    var LMSGetDia = jest.genMockFunction();
 
     beforeEach(function () {
       saw = require('../saw.js');
       window.API = {
-        LMSInitialize: LMSInit
+        LMSInitialize: LMSInit,
+        LMSGetLastError: LMSGetLastErr,
+        LMSGetLastErrorString: LMSGetLastErrStr,
+        LMSGetDiagnostic: LMSGetDia
       };
 
     });
@@ -142,7 +165,21 @@ describe('saw', function () {
       delete window.API;
     });
 
+    it('sessionLogs attribute should correctly initialized', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
 
+      saw.initialize();
+      expect(saw.sessionLogs.length).toEqual(0);
+    });
+
+    it('when called should add a log entry to the sessionLogs attribute', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
+
+      saw.initialize();
+      expect(saw.sessionLogs.length).toEqual(0);
+    });
   });
 
 });

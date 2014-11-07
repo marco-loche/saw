@@ -85,7 +85,7 @@
         'scormFnArgs':     scormAPIFnArguments,
         'errorCode':       this.API.LMSGetLastErrorString(scormLastErrCode),
         'errorCodeString': scormStatusCodeString[scormLastErrCode],
-        'diagnostic':      this.API.LMSGetDiagnostic(scormLastErrCode)
+        'diagnostic':      this.API.LMSGetDiagnostic("")
       };
 
       this.sessionLogs.push(log);

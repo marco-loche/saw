@@ -37,11 +37,11 @@ describe('saw', function () {
   });
 
   it('should have an initialize function', function () {
-    expect(saw.initializeLMS).toBeDefined();
+    expect(saw.lmsInitialize).toBeDefined();
   });
 
   it('should not be initialize before init invocation', function () {
-    expect(saw.isLMSInitialized()).toBe(false);
+    expect(saw.isInitialized()).toBe(false);
   });
 
   it('should have an initialize function', function () {
@@ -115,7 +115,7 @@ describe('saw', function () {
       LMSInit.mockReturnValueOnce("true");
 
       saw.initialize();
-      expect(saw.isLMSInitialized()).toBe(true);
+      expect(saw.isInitialized()).toBe(true);
       expect(LMSInit).toBeCalled();
       expect(LMSInit).toBeCalledWith('');
     });
@@ -124,19 +124,19 @@ describe('saw', function () {
       LMSInit.mockReturnValueOnce(true);
 
       saw.initialize();
-      expect(saw.isLMSInitialized()).toBe(true);
+      expect(saw.isInitialized()).toBe(true);
       expect(LMSInit).toBeCalled();
       expect(LMSInit).toBeCalledWith('');
     });
 
-    it('initializeLMS throw an error if LMS can not be initialized', function () {
+    it('should throw an error if LMS can not be initialized', function () {
       //SCORM standard expect a String "false" to be returned
       LMSInit.mockReturnValueOnce("false");
 
       expect(function () {
         saw.initialize();
       }).toThrow('LMS Initialization failed');
-      expect(saw.isLMSInitialized()).toBe(false);
+      expect(saw.isInitialized()).toBe(false);
     });
 
   });
@@ -166,7 +166,7 @@ describe('saw', function () {
       delete window.API;
     });
 
-    it('sessionLogs attribute should correctly initialized', function () {
+    it('should correctly initialized sessionLogs attribute', function () {
       //SCORM standard expect a String "true" to be returned
       LMSInit.mockReturnValueOnce("true");
 
@@ -175,14 +175,14 @@ describe('saw', function () {
       expect(saw.sessionLogs[0].scormFn).toEqual('LMSInitialize');
     });
 
-    it('when called should add a log entry to the sessionLogs attribute', function () {
+    it('should add a log entry to the sessionLogs attribute when invoked', function () {
       //SCORM standard expect a String "true" to be returned
       LMSInit.mockReturnValueOnce("true");
       LMSGetLastErr.mockReturnValue("0");
       LMSGetLastErrStr.mockReturnValue("NoErrorStr");
       LMSGetDia.mockReturnValue("Diagnostic");
       saw.initialize();
-      saw.logOperation("foo", "bar")
+      saw.logOperation("foo", "bar");
       expect(saw.sessionLogs.length).toEqual(2);
 
       expect(saw.sessionLogs[1].timestamp).toBeDefined();

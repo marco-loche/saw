@@ -59,23 +59,30 @@
       return !(this.API == null);
     },
 
-    initializeLMS: function () {
+    lmsInitialize: function () {
       //see 3.2.2.1 LMSInitialize
       this.LMSInitialized = "true" === String(this.API.LMSInitialize(""));
       this.logOperation('LMSInitialize');
-      if (!this.isLMSInitialized()) {
+      if (!this.isInitialized()) {
         throw new Error("LMS Initialization failed");
       }
     },
 
-    isLMSInitialized: function () {
+    isInitialized: function () {
       return this.LMSInitialized;
     },
 
-    // A convenience method that do the correct sequence of calls for the object initialization
+    // A convenience method that do the correct sequence of calls to initialize the communication with the lms
     initialize:       function () {
       this.configure();
-      this.initializeLMS();
+      this.lmsInitialize();
+    },
+
+
+    // A convenience method that do the correct sequence of calls to close the communication with the lms
+    close:       function () {
+      this.configure();
+      this.lmsInitialize();
     },
 
     logOperation: function (scormAPIFn, scormAPIFnArguments) {

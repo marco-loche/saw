@@ -25,10 +25,10 @@ saw.setScormValue('cmi.core.score', 85 );
 var value = saw.getScormValue('cmi.core.score');
 
 /* Persist current state of the Data Model (i.e. LMSCommit() )*/
-saw.persist();
+saw.commit();
 
 /* Persist the Data Model and close the connection to the LMS*/
-saw.close();
+saw.finish();
 
 ```
 

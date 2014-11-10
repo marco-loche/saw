@@ -72,8 +72,12 @@ describe('saw', function () {
     expect(saw.abort).toBeDefined();
   });
 
-  it('should have a persist function', function () {
-    expect(saw.persist).toBeDefined();
+  it('should have a commit function', function () {
+    expect(saw.commit).toBeDefined();
+  });
+
+  it('should have a finish function', function () {
+    expect(saw.finish).toBeDefined();
   });
 
   it('should have an unset function', function () {

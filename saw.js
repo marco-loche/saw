@@ -117,12 +117,12 @@
     },
 
     // A convenience method with a more
-    persist: function() {
+    commit: function() {
       this.lmsCommit();
     },
 
     // A convenience method that do the correct sequence of calls to close the communication with the lms
-    close:       function () {
+    finish:       function () {
       this.lmsCommit();
       this.lmsFinish();
     },

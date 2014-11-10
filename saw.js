@@ -44,6 +44,11 @@
     API:            null,
     sessionLogs:    [],
 
+    unset: function() {
+      this.LMSInitialized = false;
+      this.API = null;
+    },
+
     configure: function () {
       this.API = findAPI(window);
       if ((this.API == null) && (window.opener != null) && (typeof(window.opener) != "undefined")) {
@@ -81,9 +86,14 @@
     },
 
     lmsFinish: function () {
+      var succeeded= "true" === String(this.API.LMSFinish(""));
+      this.logOperation('LMSFinish');
+      if (!succeeded) {
+        this.abort("LMSFinish");
+      }
+
+      this.unset();
     },
-
-
 
     setScormValue: function () {
     },

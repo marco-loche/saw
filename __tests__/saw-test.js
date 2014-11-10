@@ -40,6 +40,22 @@ describe('saw', function () {
     expect(saw.lmsInitialize).toBeDefined();
   });
 
+  it('should have a lmsCommit function', function () {
+    expect(saw.lmsCommit).toBeDefined();
+  });
+
+  it('should have a lmsFinish function', function () {
+    expect(saw.lmsFinish).toBeDefined();
+  });
+
+  it('should have a setScormValue function', function () {
+    expect(saw.setScormValue).toBeDefined();
+  });
+
+  it('should have a getScormValue function', function () {
+    expect(saw.getScormValue).toBeDefined();
+  });
+
   it('should not be initialize before init invocation', function () {
     expect(saw.isInitialized()).toBe(false);
   });
@@ -56,20 +72,12 @@ describe('saw', function () {
     expect(saw.abort).toBeDefined();
   });
 
-  it('should have a lmsCommit function', function () {
-    expect(saw.lmsCommit).toBeDefined();
+  it('should have a persist function', function () {
+    expect(saw.persist).toBeDefined();
   });
 
-  it('should have a lmsFinish function', function () {
-    expect(saw.lmsFinish).toBeDefined();
-  });
-
-  it('should have a setScormValue function', function () {
-    expect(saw.setScormValue).toBeDefined();
-  });
-
-  it('should have a getScormValue function', function () {
-    expect(saw.getScormValue).toBeDefined();
+  it('should have an unset function', function () {
+    expect(saw.unset).toBeDefined();
   });
 
   /**
@@ -156,7 +164,7 @@ describe('saw', function () {
 
       expect(function () {
         saw.initialize();
-      }).toThrow('LMS Initialization failed');
+      }).toThrow('LMSInitialize failed');
       expect(saw.isInitialized()).toBe(false);
     });
 
@@ -217,4 +225,150 @@ describe('saw', function () {
     });
   });
 
+  /**
+   *saw.abort()
+   */
+  describe('abort', function () {
+    var LMSInit = jest.genMockFunction();
+    var LMSGetLastErr = jest.genMockFunction();
+    var LMSGetLastErrStr = jest.genMockFunction();
+    var LMSGetDia = jest.genMockFunction();
+
+    var LMSCommit = jest.genMockFunction();
+
+    beforeEach(function () {
+      saw = require('../saw.js');
+      window.API = {
+        LMSInitialize: LMSInit,
+        LMSCommit: LMSCommit,
+        LMSGetLastError: LMSGetLastErr,
+        LMSGetLastErrorString: LMSGetLastErrStr,
+        LMSGetDiagnostic: LMSGetDia
+      };
+
+    });
+
+    afterEach(function () {
+      saw = null;
+      delete window.API;
+    });
+
+    it('should raise an Exception', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      saw.initialize();
+
+      expect(function () {
+        saw.abort("foo");
+      }).toThrow('foo failed');
+      expect(saw.isInitialized()).toBe(false);
+    });
+  });
+
+  /**
+   *saw.lmsCommit()
+   */
+  describe('lmsCommit', function () {
+    var LMSInit = jest.genMockFunction();
+    var LMSCommit = jest.genMockFunction();
+
+    beforeEach(function () {
+      saw = require('../saw.js');
+      window.API = {
+        LMSInitialize: LMSInit,
+        LMSCommit: LMSCommit,
+      };
+    });
+
+    afterEach(function () {
+      saw = null;
+      delete window.API;
+    });
+
+    it('should be ok if LMSCommit succeed', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSCommit.mockReturnValueOnce("true");
+      spyOn(saw, 'logOperation');
+      saw.initialize();
+      saw.lmsCommit();
+      expect(saw.isInitialized()).toBe(true);
+      expect(LMSCommit).toBeCalled();
+      expect(LMSCommit).toBeCalledWith('');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSCommit");
+    });
+
+    it('should throw an error if LMSCommit fails', function () {
+      //SCORM standard expect a String "false" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSCommit.mockReturnValueOnce("false");
+      spyOn(saw, 'logOperation');
+      spyOn(saw, 'abort');
+      saw.initialize();
+      saw.lmsCommit();
+
+      expect(saw.isInitialized()).toBe(true);
+      expect(LMSCommit).toBeCalled();
+      expect(LMSCommit).toBeCalledWith('');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSCommit");
+      expect(saw.abort).toHaveBeenCalled();
+      expect(saw.abort).toHaveBeenCalledWith("LMSCommit");
+    });
+  });
+
+  /**
+   *saw.lmsFinish()
+   */
+  describe('lmsFinish', function () {
+    var LMSInit = jest.genMockFunction();
+    var LMSFinish= jest.genMockFunction();
+
+    beforeEach(function () {
+      saw = require('../saw.js');
+      window.API = {
+        LMSInitialize: LMSInit,
+        LMSFinish: LMSFinish,
+      };
+    });
+
+    afterEach(function () {
+      saw = null;
+      delete window.API;
+    });
+
+    it('should be ok if LMSFinish succeed', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSFinish.mockReturnValueOnce("true");
+      spyOn(saw, 'logOperation');
+      spyOn(saw, 'unset');
+      saw.initialize();
+      saw.lmsFinish();
+      expect(LMSFinish).toBeCalled();
+      expect(LMSFinish).toBeCalledWith('');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSFinish");
+      expect(saw.unset).toHaveBeenCalled();
+    });
+
+    it('should throw an error if LMSCommit fails', function () {
+      //SCORM standard expect a String "false" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSFinish.mockReturnValueOnce("false");
+      spyOn(saw, 'logOperation');
+      spyOn(saw, 'abort');
+      saw.initialize();
+      saw.lmsFinish();
+
+      expect(saw.isInitialized()).toBe(false);
+      expect(LMSFinish).toBeCalled();
+      expect(LMSFinish).toBeCalledWith('');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSFinish");
+      expect(saw.abort).toHaveBeenCalled();
+      expect(saw.abort).toHaveBeenCalledWith("LMSFinish");
+    });
+  });
 });

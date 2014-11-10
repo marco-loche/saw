@@ -371,4 +371,57 @@ describe('saw', function () {
       expect(saw.abort).toHaveBeenCalledWith("LMSFinish");
     });
   });
+
+  /**
+   *saw.setScormValue()
+   */
+  describe('setScormValue', function () {
+    var LMSInit = jest.genMockFunction();
+    var LMSSetValue= jest.genMockFunction();
+
+    beforeEach(function () {
+      saw = require('../saw.js');
+      window.API = {
+        LMSInitialize: LMSInit,
+        LMSSetValue: LMSSetValue,
+      };
+    });
+
+    afterEach(function () {
+      saw = null;
+      delete window.API;
+    });
+
+    it('should be ok if LMSSetValue succeed', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSSetValue.mockReturnValueOnce("true");
+      spyOn(saw, 'logOperation');
+      saw.initialize();
+      saw.setScormValue('foo', 'bar');
+
+      expect(LMSSetValue).toBeCalled();
+      expect(LMSSetValue).toBeCalledWith('foo', 'bar');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSSetValue", {'parameter': 'foo', 'value': 'bar'});
+    });
+
+    it('should throw an error if LMSCommit fails', function () {
+      //SCORM standard expect a String "false" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSSetValue.mockReturnValueOnce("false");
+      spyOn(saw, 'logOperation');
+      spyOn(saw, 'abort');
+      saw.initialize();
+      saw.setScormValue('foo', 'bar');
+
+      expect(LMSSetValue).toBeCalled();
+      expect(LMSSetValue).toBeCalledWith('foo', 'bar');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSSetValue", {'parameter': 'foo', 'value': 'bar'});
+      expect(saw.abort).toHaveBeenCalled();
+      expect(saw.abort).toHaveBeenCalledWith("LMSSetValue");
+    });
+  });
+
 });

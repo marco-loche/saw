@@ -95,7 +95,13 @@
       this.unset();
     },
 
-    setScormValue: function () {
+    setScormValue: function (parameter, value) {
+
+      var succeeded= "true" === String(this.API.LMSSetValue(parameter, value));
+      this.logOperation('LMSSetValue', {'parameter' : parameter, 'value' : value} );
+      if (!succeeded) {
+        this.abort("LMSSetValue");
+      }
     },
 
     getScormValue: function () {
@@ -117,7 +123,6 @@
       this.lmsCommit();
       this.lmsFinish();
     },
-
 
     abort: function (action) {
       this.LMSInitialized = false;

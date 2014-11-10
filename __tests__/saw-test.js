@@ -111,9 +111,9 @@ describe('saw', function () {
   });
 
   /**
-   *saw.initializeLMS()
+   *saw.lmsInitialize()
    */
-  describe('initializeLMS', function () {
+  describe('lmsInitialize', function () {
     var LMSInit = jest.genMockFunction();
     var logOperation = jest.genMockFunction();
 

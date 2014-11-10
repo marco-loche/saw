@@ -68,20 +68,22 @@
       this.LMSInitialized = "true" === String(this.API.LMSInitialize(""));
       this.logOperation('LMSInitialize');
       if (!this.isInitialized()) {
-        throw new Error("LMS Initialization failed");
+        this.abort("LMSInitialize");
       }
     },
 
     lmsCommit: function () {
+      var succeeded= "true" === String(this.API.LMSCommit(""));
+      this.logOperation('LMSCommit');
+      if (!succeeded) {
+        this.abort("LMSCommit");
+      }
     },
 
     lmsFinish: function () {
     },
 
-    abort: function () {
-      this.LMSInitialized = false;
-      this.API = null;
-    },
+
 
     setScormValue: function () {
     },
@@ -95,10 +97,23 @@
       this.lmsInitialize();
     },
 
+    // A convenience method with a more
+    persist: function() {
+      this.lmsCommit();
+    },
+
     // A convenience method that do the correct sequence of calls to close the communication with the lms
     close:       function () {
       this.lmsCommit();
       this.lmsFinish();
+    },
+
+
+    abort: function (action) {
+      this.LMSInitialized = false;
+      this.API = null;
+
+      throw new Error(action + " failed");
     },
 
     logOperation: function (scormAPIFn, scormAPIFnArguments) {

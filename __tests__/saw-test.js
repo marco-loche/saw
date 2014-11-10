@@ -424,4 +424,39 @@ describe('saw', function () {
     });
   });
 
+  /**
+   *saw.getScormValue()
+   */
+  describe('getScormValue', function () {
+    var LMSInit = jest.genMockFunction();
+    var LMSGetValue= jest.genMockFunction();
+
+    beforeEach(function () {
+      saw = require('../saw.js');
+      window.API = {
+        LMSInitialize: LMSInit,
+        LMSGetValue: LMSGetValue,
+      };
+    });
+
+    afterEach(function () {
+      saw = null;
+      delete window.API;
+    });
+
+    it('should be ok if LMSGetValue succeed', function () {
+      //SCORM standard expect a String "true" to be returned
+      LMSInit.mockReturnValueOnce("true");
+      LMSGetValue.mockReturnValueOnce("bar");
+      spyOn(saw, 'logOperation');
+      saw.initialize();
+
+      expect(saw.getScormValue('foo')).toEqual('bar');
+      expect(LMSGetValue).toBeCalled();
+      expect(LMSGetValue).toBeCalledWith('foo');
+      expect(saw.logOperation).toHaveBeenCalled();
+      expect(saw.logOperation).toHaveBeenCalledWith("LMSGetValue", {'parameter': 'foo', 'value': 'bar'});
+    });
+  });
+
 });

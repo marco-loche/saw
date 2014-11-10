@@ -104,7 +104,10 @@
       }
     },
 
-    getScormValue: function () {
+    getScormValue: function (parameter) {
+      var value = this.API.LMSGetValue(parameter);
+      this.logOperation('LMSGetValue', {'parameter' : parameter, 'value' : value} );
+      return value;
     },
 
     // A convenience method that do the correct sequence of calls to initialize the communication with the lms

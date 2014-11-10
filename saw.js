@@ -59,6 +59,10 @@
       return !(this.API == null);
     },
 
+    isInitialized: function () {
+      return this.LMSInitialized;
+    },
+
     lmsInitialize: function () {
       //see 3.2.2.1 LMSInitialize
       this.LMSInitialized = "true" === String(this.API.LMSInitialize(""));
@@ -68,8 +72,21 @@
       }
     },
 
-    isInitialized: function () {
-      return this.LMSInitialized;
+    lmsCommit: function () {
+    },
+
+    lmsFinish: function () {
+    },
+
+    abort: function () {
+      this.LMSInitialized = false;
+      this.API = null;
+    },
+
+    setScormValue: function () {
+    },
+
+    getScormValue: function () {
     },
 
     // A convenience method that do the correct sequence of calls to initialize the communication with the lms
@@ -78,11 +95,10 @@
       this.lmsInitialize();
     },
 
-
     // A convenience method that do the correct sequence of calls to close the communication with the lms
     close:       function () {
-      this.configure();
-      this.lmsInitialize();
+      this.lmsCommit();
+      this.lmsFinish();
     },
 
     logOperation: function (scormAPIFn, scormAPIFnArguments) {

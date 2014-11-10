@@ -28,15 +28,15 @@ describe('saw', function () {
     expect(saw.sessionLogs.length).toEqual(0);
   });
 
-  it('should have an isInitialized function', function () {
+  it('should have an isConfigured function', function () {
     expect(saw.isConfigured).toBeDefined();
   });
 
-  it('should not be initialize before init invocation', function () {
+  it('should not be configured before init invocation', function () {
     expect(saw.isConfigured()).toBe(false);
   });
 
-  it('should have an initialize function', function () {
+  it('should have an lmsInitialize function', function () {
     expect(saw.lmsInitialize).toBeDefined();
   });
 
@@ -48,9 +48,30 @@ describe('saw', function () {
     expect(saw.initialize).toBeDefined();
   });
 
-  it('should have an initialize function', function () {
+  it('should have a logOperation function', function () {
     expect(saw.logOperation).toBeDefined();
   });
+
+  it('should have a abort function', function () {
+    expect(saw.abort).toBeDefined();
+  });
+
+  it('should have a lmsCommit function', function () {
+    expect(saw.lmsCommit).toBeDefined();
+  });
+
+  it('should have a lmsFinish function', function () {
+    expect(saw.lmsFinish).toBeDefined();
+  });
+
+  it('should have a setScormValue function', function () {
+    expect(saw.setScormValue).toBeDefined();
+  });
+
+  it('should have a getScormValue function', function () {
+    expect(saw.getScormValue).toBeDefined();
+  });
+
   /**
    * saw.configure()
    */

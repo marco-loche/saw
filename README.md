@@ -38,7 +38,9 @@ saw.finish();
 
  * Fork the project
  * Clone the project to your machine
- * Install it with ```npm install```*
+ * Install [nodejs](http://nodejs.org/)
+ * Install the dependencies with ```npm install```
  * Run test ```npm test```
+ * You're ready!
 
-* needs [nodejs](http://nodejs.org/) installed
+

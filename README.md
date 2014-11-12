@@ -1,19 +1,21 @@
 # SAW
 
 ## Introduction
-Saw is a Object Oriented SCORM API Wrapper for SCORM 1.2
+Saw is an Object Oriented SCORM API Wrapper for SCORM 1.2
 ### Why
 This library allows you to develop a fully testable SCO engine.
 ## SCORM Documentation
 The SCORM 1.2 Run Time Environement specification can be found in the docs/ folder of the project
 # Usage
 ## Installation
-```JavaScript
+### with npm
+```Bash
+npm install scorm-api-wrapper --save
 ```
 ## Initialization and usage
 
 ```JavaScript
-var saw = require('saw');
+var saw = require('scorm-api-wrapper');
 
 /* Initialize the API wrapper and establish connection to the LMS*/
 saw.initialize();
@@ -32,3 +34,11 @@ saw.finish();
 
 ```
 
+# Development
+
+ * Fork the project
+ * Clone the project to your machine
+ * Install it with ```npm install```*
+ * Run test ```npm test```
+
+* needs [nodejs](http://nodejs.org/) installed

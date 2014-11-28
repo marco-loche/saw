@@ -1,7 +1,7 @@
 {
   "name": "scorm-api-wrapper",
   "version": "0.0.1",
-  "description": "An SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
+  "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
   "main": "saw.js",
   "devDependencies": {
     "flog": "0.0.1",
@@ -17,7 +17,7 @@
   "keywords": [
     "scorm",
     "api",
-    "Wrapper",
+    "wrapper",
     "e-learning"
   ],
   "author": "Marco Loche <marco@marcoloche.com> (www.marcoloche.com)",

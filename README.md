@@ -1,5 +1,7 @@
 # SAW
-
+[![Code Climate](https://codeclimate.com/github/marco-loche/saw/badges/gpa.svg)](https://codeclimate.com/github/marco-loche/saw)
+[![Test Coverage](https://codeclimate.com/github/marco-loche/saw/badges/coverage.svg)](https://codeclimate.com/github/marco-loche/saw)
+[![Build Status](https://travis-ci.org/marco-loche/saw.svg)](https://travis-ci.org/marco-loche/saw)
 ## Introduction
 Saw is an Object Oriented SCORM API Wrapper for SCORM 1.2
 ### Why

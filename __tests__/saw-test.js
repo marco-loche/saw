@@ -180,7 +180,7 @@ describe('saw', function () {
   describe('logOperation', function () {
     var LMSInit = jest.genMockFunction();
     var LMSGetLastErr = jest.genMockFunction();
-    var LMSGetLastErrStr = jest.genMockFunction();
+    var LMSGetErrStr = jest.genMockFunction();
     var LMSGetDia = jest.genMockFunction();
 
     beforeEach(function () {
@@ -188,7 +188,7 @@ describe('saw', function () {
       window.API = {
         LMSInitialize: LMSInit,
         LMSGetLastError: LMSGetLastErr,
-        LMSGetLastErrorString: LMSGetLastErrStr,
+        LMSGetErrorString: LMSGetErrStr,
         LMSGetDiagnostic: LMSGetDia
       };
 
@@ -212,7 +212,7 @@ describe('saw', function () {
       //SCORM standard expect a String "true" to be returned
       LMSInit.mockReturnValueOnce("true");
       LMSGetLastErr.mockReturnValue("0");
-      LMSGetLastErrStr.mockReturnValue("NoErrorStr");
+      LMSGetErrStr.mockReturnValue("NoErrorStr");
       LMSGetDia.mockReturnValue("Diagnostic");
       saw.initialize();
       saw.logOperation("foo", "bar");
@@ -223,7 +223,7 @@ describe('saw', function () {
       expect(saw.sessionLogs[1].scormFnArgs).toEqual('bar');
       expect(saw.sessionLogs[1].errorCode).toEqual("0");
       expect(saw.sessionLogs[1].errorCodeString).toEqual("NoError");
-      expect(LMSGetLastErrStr).toBeCalledWith("0");
+      expect(LMSGetErrStr).toBeCalledWith("0");
       expect(saw.sessionLogs[1].errorCodeStringLMS).toEqual("NoErrorStr");
       expect(saw.sessionLogs[1].diagnostic).toEqual("Diagnostic");
     });
@@ -235,7 +235,7 @@ describe('saw', function () {
   describe('abort', function () {
     var LMSInit = jest.genMockFunction();
     var LMSGetLastErr = jest.genMockFunction();
-    var LMSGetLastErrStr = jest.genMockFunction();
+    var LMSGetErrStr = jest.genMockFunction();
     var LMSGetDia = jest.genMockFunction();
 
     var LMSCommit = jest.genMockFunction();
@@ -246,7 +246,7 @@ describe('saw', function () {
         LMSInitialize: LMSInit,
         LMSCommit: LMSCommit,
         LMSGetLastError: LMSGetLastErr,
-        LMSGetLastErrorString: LMSGetLastErrStr,
+        LMSGetErrorString: LMSGetErrStr,
         LMSGetDiagnostic: LMSGetDia
       };
 

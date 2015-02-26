@@ -1,6 +1,6 @@
 {
   "name": "scorm-api-wrapper",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
   "main": "saw.js",
   "devDependencies": {

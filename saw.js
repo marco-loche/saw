@@ -142,7 +142,7 @@
         'scormFnArgs':        scormAPIFnArguments,
         'errorCode':          scormLastErrCode,
         'errorCodeString':    scormStatusCodeString[scormLastErrCode],
-        'errorCodeStringLMS': this.API.LMSGetLastErrorString(scormLastErrCode),
+        'errorCodeStringLMS': this.API.LMSGetErrorString(scormLastErrCode),
         'diagnostic':         this.API.LMSGetDiagnostic("")
       };
 

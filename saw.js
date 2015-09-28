@@ -133,6 +133,15 @@
 
       throw new Error(action + " failed");
     },
+    
+    getLastError: function () {
+      var error = this.API.LMSGetLastError();
+      
+      return {
+        code: parseInt(error, 10),
+        message: scormStatusCodeString[error]
+      };
+    },
 
     logOperation: function (scormAPIFn, scormAPIFnArguments) {
       var scormLastErrCode = this.API.LMSGetLastError();
